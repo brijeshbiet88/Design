@@ -1,4 +1,4 @@
-package com.interview.ds.system.design;
+package com.interview.ds.system.design.snakeladder;
 
 public class Player {
 

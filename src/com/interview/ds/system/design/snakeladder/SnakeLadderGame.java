@@ -1,4 +1,4 @@
-package com.interview.ds.system.design;
+package com.interview.ds.system.design.snakeladder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
