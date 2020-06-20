@@ -49,8 +49,10 @@ public class SnakeLadderGame {
 				System.out.println("\n");
 				showPositions(players);
 
-			} else
+			} else {
+				i++;
 				continue;
+			}
 
 			i++;
 			if (i == players.size()) {
