@@ -42,6 +42,7 @@ public class Calendar {
 		}
 	}
 
+	/* can be optimized more */
 	private static int calculateFirstDayOfYear(int baseYear, int baseDay, int year) {
 		int yearDiff ;
 		if(year > baseYear) {
