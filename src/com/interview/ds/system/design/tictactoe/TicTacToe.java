@@ -53,24 +53,30 @@ public class TicTacToe {
 	public static void main(String[] args) {
 		int n = 3;
 		TicTacToe ticTacToe = new TicTacToe(n);
+		ticTacToe.startGame();
+		
+		
+	}
+
+	private void startGame() {
 		int result = Integer.MAX_VALUE;
 		Scanner sc = new Scanner(System.in);
 		int player = 1;
 		int row , col ;
 		
-		while(ticTacToe.totalMoves != n*n && result != 1 && result != -1) {
+		while(totalMoves != n*n && result != 1 && result != -1) {
 			System.out.print("Player"+ player+" : Enter row Between 0 to "+(n-1)+" : ");
 			row = sc.nextInt();
 			System.out.print("Player"+ player+" : Enter col Between 0 to "+(n-1)+" : ");
 			col = sc.nextInt();
 			
-			result = ticTacToe.move(player, row, col);
+			result = move(player, row, col);
 			if(player == 1) {
 				player = 0;
 			}else {
 				player = 1;
 			}
-			ticTacToe.showBoard();
+			showBoard();
 		}
 		
 		if(result == 0) {
@@ -80,6 +86,7 @@ public class TicTacToe {
 		}else if(result == 1) {
 			System.out.println("Player 1 Won");
 		}
+		
 		
 	}
 
