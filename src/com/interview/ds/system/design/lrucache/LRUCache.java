@@ -19,10 +19,11 @@ public class LRUCache {
 	}
 	
 	public static void main(String[] args) {
-		
-		LRUCache cache = new LRUCache(3);
+		int cacheLimit = 4;
+		LRUCache cache = new LRUCache(cacheLimit);
 		
 		int [] pages = {1, 2, 3, 1, 4, 2, 6, 1, 1, 6, 1 , 3 , 5 , 8};
+		System.out.println("CacheSizeLimit : "+cacheLimit);
 		System.out.print("Pages : ");
 		for(int element : pages)
 			System.out.print(element+"  ");
@@ -104,7 +105,8 @@ public class LRUCache {
 	}
 }
 /*
- Pages : 1  2  3  1  4  2  6  1  1  6  1  3  5  8  
+CacheSizeLimit : 4
+Pages : 1  2  3  1  4  2  6  1  1  6  1  3  5  8  
 Page : 1
 Cache content : [1] 
 Page : 2
@@ -114,23 +116,23 @@ Cache content : [3] [2] [1]
 Page : 1
 Cache content : [1] [3] [2] 
 Page : 4
-Cache content : [4] [1] [3] 
+Cache content : [4] [1] [3] [2] 
 Page : 2
-Cache content : [2] [4] [1] 
+Cache content : [2] [4] [1] [3] 
 Page : 6
-Cache content : [6] [2] [4] 
+Cache content : [6] [2] [4] [1] 
 Page : 1
-Cache content : [1] [6] [2] 
+Cache content : [1] [6] [2] [4] 
 Page : 1
-Cache content : [1] [6] [2] 
+Cache content : [1] [6] [2] [4] 
 Page : 6
-Cache content : [6] [1] [2] 
+Cache content : [6] [1] [2] [4] 
 Page : 1
-Cache content : [1] [6] [2] 
+Cache content : [1] [6] [2] [4] 
 Page : 3
-Cache content : [3] [1] [6] 
+Cache content : [3] [1] [6] [2] 
 Page : 5
-Cache content : [5] [3] [1] 
+Cache content : [5] [3] [1] [6] 
 Page : 8
-Cache content : [8] [5] [3] 
- * */
+Cache content : [8] [5] [3] [1]  
+ */
