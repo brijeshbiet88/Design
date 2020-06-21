@@ -7,6 +7,7 @@ public class Player {
 	private int position;
 	private boolean isWinner;
 	private boolean isMovable;
+	private String rank;
 
 	public Player(String name, String color) {
 		super();
@@ -55,6 +56,14 @@ public class Player {
 
 	public void setIsMovable(boolean isMovable) {
 		this.isMovable = isMovable;
+	}
+
+	public String getRank() {
+		return rank;
+	}
+
+	public void setRank(String rank) {
+		this.rank = rank;
 	}
 
 }

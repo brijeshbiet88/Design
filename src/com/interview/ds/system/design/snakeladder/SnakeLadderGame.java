@@ -10,6 +10,7 @@ public class SnakeLadderGame {
 	private static HashMap <Integer,Integer> ladder = new HashMap<Integer, Integer>();
 	private static HashMap <Integer,Integer>  snake = new HashMap<Integer, Integer>();
 	private static Random random = new Random();
+	private static int noOfWinners = 0;
 	private static Scanner sc = new Scanner(System.in);
 	static {
 		
@@ -59,27 +60,35 @@ public class SnakeLadderGame {
 				i = 0;
 			}
 		}
+		
+		showRanks(players);
 
 	}
 
-	private static boolean isGameOver(ArrayList<Player> players) {
-		int countWinners = 0;
-		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i).isWinner() == true) {
-				countWinners++;
+	private static void showRanks(ArrayList<Player> players) {
+		for(int i = 0 ; i < players.size() ; i++) {
+			Player p = players.get(i);
+			if(p.getRank() == null) {
+				p.setRank(Rank.values()[players.size()-1].name());
 			}
+			System.out.println("Player : "+p.getName()+" Color : "+p.getColor()+" Rank : "+p.getRank());
 		}
+		
+	}
 
-		if (countWinners == players.size() - 1)
+	private static boolean isGameOver(ArrayList<Player> players) {
+		if (noOfWinners == players.size() - 1)
 			return true;
-		return false;
+			return false;
 
 	}
 
 	private static void showPositions(ArrayList<Player> players) {
 		for(int i = 0 ; i < players.size(); i++) {
 			Player p = players.get(i);
-			System.out.print("Name: "+p.getName()+" Color: "+p.getColor()+" isMovable: "+p.isMovable()+" isWinner: "+p.isWinner()+" Position :"+p.getPosition());
+			char w = p.isWinner()== true ? 'T':'F';
+			char m = p.isMovable()== true ? 'T':'F';
+			System.out.print("Name: "+p.getName()+" Color: "+p.getColor()+" isMovable: "+m+" isWinner: "+w+" Position : "+p.getPosition());
 			System.out.println();
 		}
 		
@@ -113,7 +122,6 @@ public class SnakeLadderGame {
 			generatedNumber = random.nextInt(6) + 1;
 		}
 		if(count != 3) {
-			//generatedNumber = random.nextInt(6)+1;
 			System.out.println("Player "+players.get(i).getName()+" Number : "+generatedNumber);
 			if(isMovable) {
 				move(players , i ,generatedNumber);
@@ -122,6 +130,8 @@ public class SnakeLadderGame {
 		
 		if(players.get(i).getPosition() == 100) {
 			players.get(i).setWinner(true);
+			players.get(i).setRank(Rank.values()[noOfWinners].name());
+			noOfWinners++;
 			System.out.println("Player : "+players.get(i).getName()+" Won ");
 		}
 		}
