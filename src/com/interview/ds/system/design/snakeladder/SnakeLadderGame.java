@@ -94,9 +94,9 @@ public class SnakeLadderGame {
 	}
 
 	private void move(int i) {
-		System.out.print(" Press Any Numeric Key to Move and any other key to skip : ");
+		System.out.print(" Press 0 or 1 to move and any other numeric key to skip : ");
 		int c = sc.nextInt();
-		if(c >=0 && c <=9) {
+		if(c == 0 || c ==1 ) {
 		int initialPos = players.get(i).getPosition();
 		boolean isMovable = players.get(i).isMovable();
 		int generatedNumber = random.nextInt(6)+1;
