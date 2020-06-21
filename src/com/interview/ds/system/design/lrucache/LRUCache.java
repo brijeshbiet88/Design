@@ -12,13 +12,12 @@ public class LRUCache {
 		HashMap<Integer, ListNode> cache = new HashMap<Integer, ListNode>();
 		
 		int [] pages = {1, 2, 3, 1, 4, 2, 6, 1, 1, 6, 1 , 3 , 5 , 8};
-		int value ;
 		System.out.print("Pages : ");
 		for(int element : pages)
 			System.out.print(element+"  ");
 		for(int i = 0 ; i < pages.length ; i++) {
 			System.out.println();
-			value = getPage(cache, pages[i]);
+			getPage(cache, pages[i]);
 			System.out.println("Page : "+pages[i]);
 			System.out.print("Cache content : ");
 			showCacheContent();
@@ -35,7 +34,7 @@ public class LRUCache {
 		
 	}
 
-	private static int getPage(HashMap<Integer, ListNode> cache , int key) {
+	private static void getPage(HashMap<Integer, ListNode> cache , int key) {
 		if(cache.containsKey(key)) {
 			ListNode node = cache.get(key);
 			if(node != front) {
@@ -85,7 +84,6 @@ public class LRUCache {
 				}
 			}		
 		}	
-		return key;
 	}
 
 	private static boolean isCacheEmpty() {
