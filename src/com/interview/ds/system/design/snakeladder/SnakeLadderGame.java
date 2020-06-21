@@ -94,9 +94,9 @@ public class SnakeLadderGame {
 	}
 
 	private void move(int i) {
-		System.out.print(" Press 1 Move and any other key to skip : ");
+		System.out.print(" Press Any Numeric Key to Move and any other key to skip : ");
 		int c = sc.nextInt();
-		if(c == 1) {
+		if(c >=0 && c <=9) {
 		int initialPos = players.get(i).getPosition();
 		boolean isMovable = players.get(i).isMovable();
 		int generatedNumber = random.nextInt(6)+1;
@@ -105,7 +105,7 @@ public class SnakeLadderGame {
 			System.out.println("Player "+players.get(i).getName()+" Number : "+generatedNumber);
 			count++;
 			if (count == 3) {
-				System.out.println("3 Times 6 . So All Moves Cancelled s");
+				System.out.println("3 Times 6 . So All Moves Cancelled ");
 				players.get(i).setPositions(initialPos);
 				break;
 			}
