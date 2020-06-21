@@ -7,51 +7,49 @@ import java.util.Scanner;
 
 public class SnakeLadderGame {
 	
-	private static HashMap <Integer,Integer> ladder = new HashMap<Integer, Integer>();
-	private static HashMap <Integer,Integer>  snake = new HashMap<Integer, Integer>();
-	private static Random random = new Random();
-	private static int noOfWinners = 0;
-	private static Scanner sc = new Scanner(System.in);
-	static {
+	private HashMap <Integer,Integer> ladder;
+	private HashMap <Integer,Integer>  snake ;
+	private Random random ;
+	private int noOfWinners;
+	private static Scanner sc;
+	ArrayList<Player> players;
+	
+	public SnakeLadderGame() {
+		ladder = new HashMap<Integer, Integer>();
+		snake = new HashMap<Integer, Integer>();
+		random = new Random();
+		noOfWinners = 0;
+		sc = new Scanner(System.in);
+		players = new ArrayList<Player>();
 		
-		ladder.put(3, 15);
-		ladder.put(7, 26);
-		ladder.put(15, 28);
-		ladder.put(22, 39);
-		ladder.put(28, 93);
-		ladder.put(42, 69);
-		ladder.put(56, 88);
-		
-		snake.put(99, 9);
-		snake.put(81, 18);
-		snake.put(68, 6);
-		snake.put(53, 11);
-		snake.put(42, 14);
-		snake.put(32, 8);
-		
+		ladder.put(3, 15); ladder.put(7, 26); ladder.put(15, 28); ladder.put(22, 39);
+		ladder.put(28, 93); ladder.put(42, 69); ladder.put(56, 88);ladder.put(65, 94);
+	 
+		snake.put(81, 18); snake.put(68, 6); snake.put(53, 11);
+		snake.put(42, 14); snake.put(32, 8);
 	}
-
 	public static void main(String[] args) {
-		int noOfPlayers = findPlayersNumber();
-		ArrayList<Player> players = new ArrayList<Player>();
-		registerPlayers(players , noOfPlayers);
-		startGame(players);
+		SnakeLadderGame snakeLadderGame = new SnakeLadderGame();
 		
+		int noOfPlayers = snakeLadderGame.findPlayersNumber();
+		snakeLadderGame.registerPlayers(noOfPlayers);
+		snakeLadderGame.startGame();
 		
 	}
 
-	private static void startGame(ArrayList<Player> players) {
+	private void startGame() {
 		boolean isOver = false;
-		for (int i = 0; i < players.size() && !isOver;) {
+		int i ;
+		for (i = 0; i < players.size() && !isOver;) {
 			if (players.get(i).isWinner() == false) {
 				System.out.print("Turn of Player : " + players.get(i).getName());
-				move(players, i);
-				isOver = isGameOver(players);
+				move(i);
+				isOver = isGameOver();
 				System.out.println("\n");
-				showPositions(players);
+				showPositions();
 
 			} else {
-				i++;
+				i = (i + 1) % players.size();
 				continue;
 			}
 
@@ -65,7 +63,7 @@ public class SnakeLadderGame {
 
 	}
 
-	private static void showRanks(ArrayList<Player> players) {
+	private void showRanks(ArrayList<Player> players) {
 		for(int i = 0 ; i < players.size() ; i++) {
 			Player p = players.get(i);
 			if(p.getRank() == null) {
@@ -76,25 +74,26 @@ public class SnakeLadderGame {
 		
 	}
 
-	private static boolean isGameOver(ArrayList<Player> players) {
-		if (noOfWinners == players.size() - 1)
+	private boolean isGameOver() {
+		if (noOfWinners == (players.size() - 1)) {
 			return true;
+		}
 			return false;
 
 	}
 
-	private static void showPositions(ArrayList<Player> players) {
+	private void showPositions() {
 		for(int i = 0 ; i < players.size(); i++) {
 			Player p = players.get(i);
 			char w = p.isWinner()== true ? 'T':'F';
 			char m = p.isMovable()== true ? 'T':'F';
-			System.out.print("Name: "+p.getName()+" Color: "+p.getColor()+" isMovable: "+m+" isWinner: "+w+" Position : "+p.getPosition());
+			System.out.print("Player : "+p.getName()+" Color: "+p.getColor()+" Movable: "+m+" Winner: "+w+" Position : "+p.getPosition());
 			System.out.println();
 		}
 		
 	}
 
-	private static void move(ArrayList<Player> players, int i) {
+	private void move(int i) {
 		System.out.print(" Press 1 Move and any other key to skip : ");
 		int c = sc.nextInt();
 		if(c == 1) {
@@ -111,7 +110,7 @@ public class SnakeLadderGame {
 				break;
 			}
 			if (isMovable) {
-				if(!move(players , i ,generatedNumber)) {
+				if(!move(i ,generatedNumber)) {
 					break;
 				}
 			}
@@ -124,14 +123,16 @@ public class SnakeLadderGame {
 		if(count != 3) {
 			System.out.println("Player "+players.get(i).getName()+" Number : "+generatedNumber);
 			if(isMovable) {
-				move(players , i ,generatedNumber);
+				move(i ,generatedNumber);
 			}
 		}
 		
 		if(players.get(i).getPosition() == 100) {
-			players.get(i).setWinner(true);
-			players.get(i).setRank(Rank.values()[noOfWinners].name());
-			noOfWinners++;
+			if(players.get(i).isWinner() == false) {
+				players.get(i).setWinner(true);
+				players.get(i).setRank(Rank.values()[noOfWinners].name());
+				noOfWinners++;
+			}
 			System.out.println("Player : "+players.get(i).getName()+" Won ");
 		}
 		}
@@ -143,7 +144,7 @@ public class SnakeLadderGame {
 
 	
 
-	private static boolean move(ArrayList<Player> players, int i, int generatedNumber) {
+	private boolean move(int i, int generatedNumber) {
 		Player p = players.get(i);
 		if((p.getPosition()+generatedNumber ) > 100) {
 			System.out.println("Player "+players.get(i).getName()+" is Unmovable .");
@@ -164,7 +165,7 @@ public class SnakeLadderGame {
 		return true;
 	}
 
-	private static void registerPlayers(ArrayList<Player> players , int noOfPlayers) {
+	private void registerPlayers(int noOfPlayers) {
 		for (int i = 0 ; i < noOfPlayers ; i++) {
 			Player p = new Player(String.valueOf((char)(65+i)), Colors.values()[i].name());
 			players.add(p);
@@ -172,8 +173,7 @@ public class SnakeLadderGame {
 		
 	}
 
-	private static int findPlayersNumber() {
-		Scanner sc = new Scanner(System.in);
+	private int findPlayersNumber() {
 		System.out.print("Enter Number Of Players : ");
 		int noOfPlayers;
 		while (true) {
@@ -187,3 +187,14 @@ public class SnakeLadderGame {
 		return noOfPlayers;
 	}
 }
+/*
+Final Output 
+Player : A Color: R Movable: T Winner: T Position : 100
+Player : B Color: G Movable: T Winner: T Position : 100
+Player : C Color: B Movable: T Winner: F Position : 99
+Player : D Color: Y Movable: T Winner: T Position : 100
+Player : A Color : R Rank : SECOND
+Player : B Color : G Rank : THIRD
+Player : C Color : B Rank : FOURTH
+Player : D Color : Y Rank : FIRST
+ * */
