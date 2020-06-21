@@ -4,12 +4,23 @@ import java.util.HashMap;
 
 public class LRUCache {
 
-	private static int cacheSizeLimit = 3;
-	private static int cacheSize = 0;
-	private static ListNode front = null;;
-	private static ListNode rear = null;
+	private int cacheSizeLimit;
+	private int cacheSize ;
+	private ListNode front ;
+	private ListNode rear ;
+	HashMap<Integer, ListNode> cache ;
+	
+	public LRUCache(int cacheSizeLimit) {
+		this.cacheSizeLimit = cacheSizeLimit;
+		front = null;
+		rear = null;
+		cacheSize = 0;
+		cache = new HashMap<Integer, ListNode>();
+	}
+	
 	public static void main(String[] args) {
-		HashMap<Integer, ListNode> cache = new HashMap<Integer, ListNode>();
+		
+		LRUCache cache = new LRUCache(3);
 		
 		int [] pages = {1, 2, 3, 1, 4, 2, 6, 1, 1, 6, 1 , 3 , 5 , 8};
 		System.out.print("Pages : ");
@@ -17,15 +28,15 @@ public class LRUCache {
 			System.out.print(element+"  ");
 		for(int i = 0 ; i < pages.length ; i++) {
 			System.out.println();
-			getPage(cache, pages[i]);
+			cache.getPage(pages[i]);
 			System.out.println("Page : "+pages[i]);
 			System.out.print("Cache content : ");
-			showCacheContent();
+			cache.showCacheContent();
 		}
 
 	}
 	
-	private static void showCacheContent() {
+	private void showCacheContent() {
 		ListNode temp  = front;
 		while(temp != null ) {
 			System.out.print("["+temp.key+"] ");
@@ -34,7 +45,7 @@ public class LRUCache {
 		
 	}
 
-	private static void getPage(HashMap<Integer, ListNode> cache , int key) {
+	private void getPage(int key) {
 		if(cache.containsKey(key)) {
 			ListNode node = cache.get(key);
 			if(node != front) {
@@ -86,7 +97,7 @@ public class LRUCache {
 		}	
 	}
 
-	private static boolean isCacheEmpty() {
+	private boolean isCacheEmpty() {
 		if(front == null && rear == null) 
 			return true;
 			return false;
