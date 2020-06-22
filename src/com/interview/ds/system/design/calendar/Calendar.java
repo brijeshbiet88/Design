@@ -48,6 +48,19 @@ public class Calendar {
 		if(year > baseYear) {
 			yearDiff = (year - baseYear) % 400;
 			
+			while(yearDiff > 100) {
+				yearDiff = yearDiff - 100;
+				baseDay = (baseDay + 5) % 7;
+						
+			}
+			
+			while(yearDiff > 4) {
+				yearDiff = yearDiff - 4;
+				baseDay = (baseDay + 5) % 7;
+						
+			}
+			
+			
 			for (int i = baseYear ; i < (baseYear + yearDiff) ; i++) {
 				 if(isLeapYear(i)) {
 					 baseDay = baseDay + 2;
@@ -60,7 +73,12 @@ public class Calendar {
 		}
 		
 		else if(year < baseYear) {
-			yearDiff = (baseYear -year) % 400;
+			yearDiff = (baseYear - year) % 400;
+			while(yearDiff > 100) {
+				yearDiff = yearDiff - 100;
+				baseDay = (baseDay + 2) % 7;
+						
+			}
 			for (int i = baseYear -1 ; i >= (baseYear - yearDiff) ; i--) {
 				 if(isLeapYear(i)) {
 					 baseDay = baseDay - 2;
