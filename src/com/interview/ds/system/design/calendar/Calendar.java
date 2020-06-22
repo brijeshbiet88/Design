@@ -73,12 +73,6 @@ public class Calendar {
 						
 			}
 			
-			while(yearDiff > 4) {
-				yearDiff = yearDiff - 4;
-				baseDay = (baseDay + 2) % 7;
-						
-			}
-			
 			for (int i = baseYear -1 ; i >= (baseYear - yearDiff) ; i--) {
 				 if(isLeapYear(i)) {
 					 baseDay = baseDay - 2;
